@@ -12,10 +12,6 @@ const Home = () => {
     login(accessToken);
 
     const { authToken } = useAuth();
-
-    const handleLoginClick = () => {
-        window.location.href = '/login';
-      };
       return (
         <Main 
           title="web-search" 

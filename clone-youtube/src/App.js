@@ -4,7 +4,6 @@ import { AuthProvider } from './component/AuthContext';
 import Main from './component/section/Main';
 
 import Home from './pages/Home';
-import LoginPage from './pages/LoginPage';
 import Subscription from './pages/Subscription';
 import Search from './pages/Search';
 import Channel from './pages/Channel';
@@ -17,7 +16,6 @@ const App = () => {
         <Suspense fallback={<Main />}>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path="/login" element={<LoginPage />} />
             <Route path="/Subscription" element={<Subscription />} />
             <Route path='/search/:searchId' element={<Search />} />
             <Route path='/channel/:channelId' element={<Channel />} />

@@ -1,0 +1,62 @@
+.Subscription__inner {
+    display: flex;
+    flex-wrap: wrap;
+
+    &.overflow {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .Subscription {
+
+        .Subscription__img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .Subscription__info {
+            width: 150px;
+            text-align: center;
+            @include line-one;
+            padding-bottom: 40px;
+        }
+    }
+}
+#SubscriptioPage {
+    .Subscriptio__inner {
+        .Subscriptio {
+            margin-right: 20px;
+        }
+        .Subscriptio__img {
+            width: 150px;
+            height: 150px;
+        }
+        .Subscriptio__info {
+            width: 150px;
+            padding-bottom: 40px;
+        }
+    }
+}
+@media (max-width: 1200px){
+    .Subscription__inner {
+        justify-content: center;
+
+        .Subscription {
+            margin-right: 0;
+            
+            .Subscription__img {
+                width: 130px;
+                height: 130px;
+                margin: 10px auto;
+            }
+        }   
+    }
+}
+@media (max-width: 800px){
+    .Subscription__inner {
+        margin-top: 70px;
+    }
+}

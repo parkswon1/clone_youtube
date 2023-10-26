@@ -12,7 +12,7 @@ const GoogleLoginComponent = () => {
 
   return (
     <div>
-      <button onClick={handleGoogleLogin}>Google 로그인</button>
+      <button className="login-button" onClick={handleGoogleLogin}>Google 로그인</button>
     </div>
   );
 };

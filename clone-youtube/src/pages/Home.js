@@ -2,6 +2,7 @@ import React from 'react'
 import { useAuth } from '../component/AuthContext';
 import Main from '../component/section/Main'
 import Subscription from '../component/Subscription';
+import GoogleLoginComponent from '../component/GoogleLogin';
 
 const Home = () => {
     const { login } = useAuth();
@@ -21,15 +22,14 @@ const Home = () => {
           description="나만의 유튜브."
         >
           <div>
-            <h1>홈 페이지</h1>
             {authToken ? (
               <div>
                 <Subscription id='Subscription' />
               </div>
             ) : (
               <div>
-                <p>로그인이 필요합니다.</p>
-                <button onClick={handleLoginClick}>로그인 페이지로 이동</button>
+                <p className="login-message">로그인이 필요합니다.</p>
+                <GoogleLoginComponent />
               </div>
             )}
           </div>

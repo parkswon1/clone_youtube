@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
@@ -8,34 +7,42 @@ function Subscription() {
     const [subscribedChannels, setSubscribedChannels] = useState([]);
 
     useEffect(() => {
-        const fetchSubscribedChannels = async () => {
-            try {
-                const response = await fetch('https://www.googleapis.com/youtube/v3/subscriptions?part=snippet&mine=true', {
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${authToken}`,
-                    },
-                });
+        const fetchAllSubscribedChannels = async () => {
+            let allChannels = [];
+            let nextPageToken = null;
 
-                if (response.ok) {
-                    const data = await response.json();
-                    const channels = data.items.map((item) => ({
-                        img: item.snippet.thumbnails.default.url,
-                        name: item.snippet.title,
-                        channelAddress: `https://www.youtube.com/channel/${item.snippet.resourceId.channelId}`,
-                        channelId: item.snippet.resourceId.channelId,
-                    }));
-                    
-                    setSubscribedChannels(channels);
-                } else {
-                    console.error('Failed to fetch subscribed channels');
+            do {
+                try {
+                    const response = await fetch(`https://www.googleapis.com/youtube/v3/subscriptions?part=snippet&mine=true${nextPageToken ? `&pageToken=${nextPageToken}` : ''}`, {
+                        method: 'GET',
+                        headers: {
+                            Authorization: `Bearer ${authToken}`,
+                        },
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        const channels = data.items.map((item) => ({
+                            img: item.snippet.thumbnails.default.url,
+                            name: item.snippet.title,
+                            channelAddress: `https://www.youtube.com/channel/${item.snippet.resourceId.channelId}`,
+                            channelId: item.snippet.resourceId.channelId,
+                        }));
+
+                        allChannels = [...allChannels, ...channels];
+                        nextPageToken = data.nextPageToken;
+                    } else {
+                        console.error('Failed to fetch subscribed channels');
+                    }
+                } catch (error) {
+                    console.error('Error fetching data:', error);
                 }
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
+            } while (nextPageToken);
+
+            setSubscribedChannels(allChannels);
         };
 
-        fetchSubscribedChannels();
+        fetchAllSubscribedChannels();
     }, [authToken]);
 
     return (
